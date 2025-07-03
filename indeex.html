@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Test with Login</title>
+  <style>
+    body {
+      padding: 25px;
+      font-family: Arial, sans-serif;
+    }
+    .title {
+      color: #5C6AC4;
+    }
+    #testSection, #resultSection, #allResultsSection {
+      margin-top: 20px;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="title">Login</h2>
+  <div id="loginSection">
+    <form id="loginForm">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" required /><br /><br />
+      <label for="number">Number:</label><br />
+      <input type="text" id="number" required /><br /><br />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="testSection" style="display:none;">
+    <h2 class="title">Python Basic Test</h2>
+    <div id="welcome"></div>
+    <form id="testForm">
+      <div id="questions"></div>
+      <button type="submit">Submit Test</button>
+    </form>
+  </div>
+
+  <div id="resultSection" style="display:none;">
+    <h2>Test Result</h2>
+    <p id="resultText"></p>
+    <button id="showAllResultsBtn">Show All Test Results</button>
+  </div>
+
+  <div id="allResultsSection" style="display:none;">
+    <h2>All Test Results</h2>
+    <ul id="allResultsList"></ul>
+  </div>
+
+<script>
+  // Questions array with 15 Python basic objective questions
+  const questions = [
+    {
+      q: 'What is the output of print(2 + 3)?',
+      options: ['23', '5', 'Error', 'None'],
+      answer: '5',
+    },
+    {
+      q: 'Which keyword is used to define a function in Python?',
+      options: ['func', 'def', 'function', 'define'],
+      answer: 'def',
+    },
+    {
+      q: 'What data type is the result of 3 / 2 in Python 3?',
+      options: ['int', 'float', 'str', 'bool'],
+      answer: 'float',
+    },
+    {
+      q: 'Which of these is a mutable data type?',
+      options: ['tuple', 'list', 'str', 'int'],
+      answer: 'list',
+    },
+    {
+      q: 'How do you start a comment in Python?',
+      options: ['//', '#', '/*', '--'],
+      answer: '#',
+    },
+    {
+      q: 'What is the output of print(type("Hello"))?',
+      options: ['<class \'str\'>', '<class \'int\'>', 'string', 'text'],
+      answer: '<class \'str\'>',
+    },
+    {
+      q: 'Which operator is used for exponentiation?',
+      options: ['^', '**', 'exp', '%'],
+      answer: '**',
+    },
+    {
+      q: 'Which of the following is used to create a set?',
+      options: ['{}', '[]', '()', 'set()'],
+      answer: 'set()',
+    },
+    {
+      q: 'What does the len() function do?',
+      options: ['Returns length of a string/list', 'Returns max value', 'Converts to int', 'None of these'],
+      answer: 'Returns length of a string/list',
+    },
+    {
+      q: 'Which keyword is used for loops in Python?',
+      options: ['loop', 'repeat', 'for', 'iterate'],
+      answer: 'for',
+    },
+    {
+      q: 'What is the output of print(bool(""))?',
+      options: ['True', 'False', 'Error', 'None'],
+      answer: 'False',
+    },
+    {
+      q: 'How do you create a dictionary in Python?',
+      options: ['[]', '{}', '()', '<>'],
+      answer: '{}',
+    },
+    {
+      q: 'Which method adds an item to the end of a list?',
+      options: ['add()', 'append()', 'insert()', 'extend()'],
+      answer: 'append()',
+    },
+    {
+      q: 'What is the correct way to import a module in Python?',
+      options: ['import module', 'include module', 'using module', 'require module'],
+      answer: 'import module',
+    },
+    {
+      q: 'Which function converts a string to an integer?',
+      options: ['int()', 'str()', 'float()', 'bool()'],
+      answer: 'int()',
+    },
+  ];
+
+  // Elements
+  const loginSection = document.getElementById('loginSection');
+  const loginForm = document.getElementById('loginForm');
+  const testSection = document.getElementById('testSection');
+  const welcomeDiv = document.getElementById('welcome');
+  const questionsDiv = document.getElementById('questions');
+  const testForm = document.getElementById('testForm');
+  const resultSection = document.getElementById('resultSection');
+  const resultText = document.getElementById('resultText');
+  const showAllResultsBtn = document.getElementById('showAllResultsBtn');
+  const allResultsSection = document.getElementById('allResultsSection');
+  const allResultsList = document.getElementById('allResultsList');
+
+  let currentUser = null;
+
+  // Show questions in test
+  function renderQuestions() {
+    questionsDiv.innerHTML = '';
+    questions.forEach((item, index) => {
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question');
+      qDiv.innerHTML = `<p>${index + 1}. ${item.q}</p>`;
+      item.options.forEach((opt) => {
+        const id = `q${index}_opt_${opt.replace(/\s+/g, '')}`;
+        qDiv.innerHTML += `
+          <input type="radio" id="${id}" name="q${index}" value="${opt}" required />
+          <label for="${id}">${opt}</label><br />
+        `;
+      });
+      questionsDiv.appendChild(qDiv);
+    });
+  }
+
+  // Login form submit handler
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const number = document.getElementById('number').value.trim();
+    if (name && number) {
+      currentUser = { name, number };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      loginSection.style.display = 'none';
+      testSection.style.display = 'block';
+      welcomeDiv.textContent = `Welcome, ${name}! Please take the test.`;
+      renderQuestions();
+    }
+  });
+
+  // Test form submit handler
+  testForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let score = 0;
+    for (let i = 0; i < questions.length; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === questions[i].answer) {
+        score++;
+      }
+    }
+
+    // Save score with user name in localStorage results object
+    let results = JSON.parse(localStorage.getItem('results')) || {};
+    results[currentUser.name] = score;
+    localStorage.setItem('results', JSON.stringify(results));
+
+    // Mark user as test completed
+    localStorage.setItem('testCompleted_' + currentUser.name, 'true');
+
+    testSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    resultText.textContent = `Hi ${currentUser.name}, you scored ${score} out of ${questions.length}.`;
+
+    // Hide show all results button if user did not complete test (should not happen here)
+    showAllResultsBtn.style.display = 'inline-block';
+  });
+
+  // Show all results button click
+  showAllResultsBtn.addEventListener('click', function () {
+    allResultsSection.style.display = 'block';
+    allResultsList.innerHTML = '';
+
+    let results = JSON.parse(localStorage.getItem('results')) || {};
+    if (Object.keys(results).length === 0) {
+      allResultsList.innerHTML = '<li>No test results found yet.</li>';
+      return;
+    }
+
+    for (const [name, score] of Object.entries(results)) {
+      const li = document.createElement('li');
+      li.textContent = `${name} scored ${score} out of ${questions.length}`;
+      allResultsList.appendChild(li);
+    }
+  });
+
+  // On page load - check if user already logged in and test completed
+  window.onload = function () {
+    let storedUser = localStorage.get
