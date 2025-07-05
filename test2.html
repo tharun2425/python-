@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Python Basic - Week 2 Test</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #e84393;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    textarea, input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #e84393;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #d63031;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Python Basic - Week 2 Test</h2>
+    <form name="week2test" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="week2test">
+      <label>Your Full Name:</label>
+      <input type="text" name="name" required>
+      <label>Your Email:</label>
+      <input type="email" name="email" required><div class="question">
+    <p>1. What is the correct syntax to define a function in Python?</p>
+    <input type="radio" name="q1" value="a" required> a) function myfunc():<br>
+    <input type="radio" name="q1" value="b"> b) def myfunc():<br>
+    <input type="radio" name="q1" value="c"> c) define myfunc():<br>
+    <input type="radio" name="q1" value="d"> d) func myfunc():<br>
+  </div>
+
+  <div class="question">
+    <p>2. How do you insert COMMENTS in Python code?</p>
+    <input type="radio" name="q2" value="a" required> a) // This is a comment<br>
+    <input type="radio" name="q2" value="b"> b) <!-- This is a comment --> <br>
+    <input type="radio" name="q2" value="c"> c) # This is a comment<br>
+    <input type="radio" name="q2" value="d"> d) /* This is a comment */<br>
+  </div>
+
+  <div class="question">
+    <p>3. What is the output of: print(type(10))?</p>
+    <input type="radio" name="q3" value="a" required> a) &lt;class 'float'&gt;<br>
+    <input type="radio" name="q3" value="b"> b) &lt;class 'int'&gt;<br>
+    <input type="radio" name="q3" value="c"> c) integer<br>
+    <input type="radio" name="q3" value="d"> d) 10<br>
+  </div>
+
+  <!-- Add more updated and colorful questions here (4 to 15) -->
+
+  <div class="question">
+    <p>Program 1: Write a Python program to find the largest of three numbers.</p>
+    <textarea name="prog1" placeholder="Write your Python code here..." required></textarea>
+  </div>
+
+  <div class="question">
+    <p>Program 2: Write a Python program to check if a number is prime.</p>
+    <textarea name="prog2" placeholder="Write your Python code here..." required></textarea>
+  </div>
+
+  <button type="submit">Submit Test</button>
+</form>
+
+  </div>
+</body>
+</html>
